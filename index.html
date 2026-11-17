@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>So sánh điện thoại</title>
+<style>
+:root{
+  --paper:#f3eee4; --card:#faf7f0; --ink:#241f19; --mute:#7a7064; --line:#ddd4c4;
+  --accent:#a24a2c; --ok:#4d6b4a; --warn:#b7822b; --bad:#a24a2c;
+  --c0:#a24a2c; --c1:#3f5f73; --c2:#6b7f3f; --c3:#8a5a86; --c4:#b7822b; --c5:#5a5a5a; --c6:#2f7f7a; --c7:#c46a8a; --c8:#7a5a2f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.6 -apple-system,"SF Pro Text",system-ui,sans-serif;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .2  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");}
+main{max-width:1060px;margin:0 auto;padding:40px 20px 80px}
+h1{font:600 34px/1.15 Georgia,"Iowan Old Style",serif;margin:0 0 6px;letter-spacing:-.01em}
+h2{font:600 21px Georgia,serif;margin:44px 0 4px}
+.sub{color:var(--mute);max-width:680px;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin-top:14px}
+.note{font-size:13px;color:var(--mute)}
+.row{display:flex;gap:28px;flex-wrap:wrap}
+.row>*{flex:1 1 280px}
+label.w{display:block;font-size:13px;margin:8px 0 0}
+label.w span{display:flex;justify-content:space-between}
+input[type=range]{width:100%;accent-color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.scroll{overflow-x:auto}
+td input[type=number]{width:54px;border:1px solid var(--line);background:#fff8;border-radius:3px;padding:3px 4px;font:inherit}
+td input[type=text]{width:100%;min-width:90px;border:1px solid var(--line);background:#fff8;border-radius:3px;padding:3px 4px;font:inherit}
+.badge{display:inline-block;font-size:10.5px;padding:0 5px;border-radius:8px;margin-left:3px;border:1px solid}
+.b-v{color:var(--ok);border-color:var(--ok)} .b-e{color:var(--warn);border-color:var(--warn)} .b-u{color:var(--bad);border-color:var(--bad)}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0}
+.bar .nm{width:190px;font-size:13.5px;flex:none}
+.bar .tr{flex:1;background:#e9e1d2;height:20px;border-radius:3px;position:relative;overflow:hidden}
+.bar .fl{height:100%;border-radius:3px}
+.bar .v{width:92px;font-variant-numeric:tabular-nums;font-size:13px;text-align:right;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chip{display:flex;align-items:center;gap:6px;font-size:13px;border:1px solid var(--line);padding:3px 10px;border-radius:14px;cursor:pointer;background:var(--card)}
+.chip i{width:10px;height:10px;border-radius:50%}
+button{font:inherit;background:var(--ink);color:var(--paper);border:0;border-radius:4px;padding:6px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+svg text{font-family:-apple-system,system-ui,sans-serif}
+.legendkey{font-size:12.5px;color:var(--mute)}
+details{margin-top:10px} summary{cursor:pointer}
+li{margin:3px 0}
+@media (max-width:600px){.bar .nm{width:110px;font-size:12px}.bar .v{width:70px}}
+</style>
+</head>
+<body>
+<main>
+<h1>So sánh điện thoại tầm 4–8 triệu</h1>
+<p class="sub">Trải nghiệm thực tế được nhân trọng số cao hơn thông số. Mỗi điểm có nhãn độ chắc: <span class="badge b-v">đã tra</span> có nguồn, <span class="badge b-e">ước</span> tôi ước từ mô tả nguồn, <span class="badge b-u">chưa rõ</span> chưa có số đo, điểm chỉ là đoán. Mọi ô đều sửa được, trang tự tính lại.</p>
+
+<div class="card">
+  <div class="row">
+    <div>
+      <b>Trọng số</b> <span class="note">(kéo để đổi; chip chỉ 10/100 mặc định, kéo về 0 để bỏ hẳn)</span>
+      <div id="weights"></div>
+    </div>
+    <div>
+      <b>Điểm trừ sẵn cho Xiaomi / Redmi / Poco</b>
+      <label class="w"><span>HyperOS: trừ vào điểm phần mềm <b id="penv"></b></span>
+        <input id="pen" type="range" min="0" max="3" step="0.5" value="1"></label>
+      <p class="note">Nguồn: Notebookcheck (đánh giá Redmi Note 15 Pro+, 2026) nói HyperOS có quảng cáo dựng sẵn "nhiều hơn dự kiến", Xataka cũng chê app thừa. Đây là đánh giá ngắn hạn của vài tạp chí, chưa phải đo dài hạn. Moto cũng có quảng cáo ở Moto Hub, nên Moto không được 10 điểm phần mềm.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Xếp hạng tổng</h2>
+<p class="sub">Điểm tổng /10 sau khi áp trọng số và điểm trừ. Màu đậm là ước/chưa rõ càng nhiều thì càng nên nghi ngờ số này.</p>
+<div class="card" id="ranking"></div>
+
+<h2>Hồ sơ từng máy</h2>
+<p class="sub">Bấm tên máy để bật/tắt trên biểu đồ mạng nhện.</p>
+<div class="card">
+  <div class="chips" id="chips"></div>
+  <svg id="radar" viewBox="0 0 520 440" width="100%" style="max-width:560px;display:block;margin:auto"></svg>
+</div>
+
+<h2>Điểm trải nghiệm so với giá</h2>
+<p class="sub">Góc trên bên trái là máy đáng tiền: điểm cao, giá thấp. Chấm giữa mức giá thấp–cao của nguồn.</p>
+<div class="card"><svg id="scatter" viewBox="0 0 700 360" width="100%"></svg></div>
+
+<h2>Chip: đâu là "đầu dê", đâu là thịt thật</h2>
+<p class="sub">Tên trên hộp không nói được gì: "Ultra", "Pro", "Power" đều là chữ của hãng. Phải nhìn ruột: kiểu nhân CPU, tiến trình, GPU. Số bên dưới là AnTuTu 11 của NanoReview (trang tổng hợp, không nói đo trên mấy máy), chỉ để xếp thứ bậc, không phải độ mượt khi dùng thật. Chưa có nguồn nào tôi tìm được đo độ mượt thực tế (mở app, đa nhiệm) giữa các chip này.</p>
+<div class="card">
+  <div class="bar"><div class="nm">Dimensity 7300 / 7300 Ultra<br><span class="note">4nm · 4×A78+4×A55 · Moto G86, Note 14 Pro 5G</span></div><div class="tr"><div class="fl" style="width:55%;background:var(--c1)"></div></div><div class="v">~879K</div></div>
+  <div class="bar"><div class="nm">Snapdragon 7s Gen 2<br><span class="note">không có trong bảng, để so mốc</span></div><div class="tr"><div class="fl" style="width:50%;background:var(--c5)"></div></div><div class="v">~794K</div></div>
+  <div class="bar"><div class="nm">Snapdragon 6s 4G Gen 2<br><span class="note">Note 17 4G, Honor X8d (có thể là 6s Gen 2)</span></div><div class="tr"><div class="fl" style="width:43%;background:var(--c4);opacity:.5"></div></div><div class="v">~690K? <span class="badge b-u">nguồn cãi nhau</span></div></div>
+  <div class="bar"><div class="nm">Helio G100 / G100 Ultra<br><span class="note">6nm · 2×A76+6×A55 · Mali-G57 · Note 14 Pro 4G, Note 15 4G</span></div><div class="tr"><div class="fl" style="width:36%;background:var(--c0)"></div></div><div class="v">~575K</div></div>
+  <p class="note">Snapdragon 6s 4G Gen 2: Comparigon ghi 690K (nhanh hơn G100 khoảng 20%), nhưng NanoReview lại cho G100 nhỉnh hơn ở AnTuTu 11 và Geekbench 6. Tôi không phân xử được nên vẽ nhạt, chỉ biết hai chip này cùng nhóm yếu.</p>
+  <ul style="font-size:13.5px">
+    <li><b>Dimensity 7300 hơn Helio G100 rõ</b>: NanoReview ghi hơn tới 53% AnTuTu 11 (879K so với 575K), GPU gấp khoảng đôi, tiến trình 4nm so với 6nm. Đây là chỗ "đầu dê thịt chó" thật sự: <b>Redmi Note 14 Pro 4G và 5G cùng tên "Pro", nhưng ruột khác hẳn</b> (4G dùng Helio G100 Ultra, 5G dùng Dimensity 7300 Ultra), thêm màn 1080p so với 1.5K và IP64 so với IP68.</li>
+    <li><b>"Ultra" không có nghĩa là bản xịn</b>: đó là chữ hãng gắn thêm. Tôi không tìm được nguồn nào nói Helio G100 Ultra là hàng đổi tên của G99. Điều tôi thấy là hai chip này được mô tả cùng nhân A76 + Mali-G57 (6nm). Hai chip đó khác nhau bao nhiêu về xung nhịp thì chưa kiểm.</li>
+    <li><b>Exynos 1330 (Galaxy A17 5G)</b>: có một bài so cũ, Geekbench 6 đơn nhân/đa nhân 761/2.384, trong khi Dimensity 7300 là 1.018/2.920 (Beebom). Hai nguồn khác nhau, khác máy đo, nên chỉ nói được là Exynos yếu hơn, chưa biết yếu bao nhiêu.</li>
+  </ul>
+<h3 style="font:600 16px Georgia,serif;margin:26px 0 6px">Ruột từng chip: ai sản xuất, tiến trình, nhân gì</h3>
+<div class="scroll"><table>
+<tr><th>Chip</th><th>Sản xuất / tiến trình</th><th>Nhân CPU</th><th>GPU</th><th>Số đo / ghi chú</th></tr>
+<tr><td><b>Dimensity 7300 (/Ultra)</b><br><span class="note">Moto G86 Power (bản VN), Note 14 Pro 5G</span></td><td>MediaTek thiết kế, TSMC sản xuất. Tiến trình <b>nguồn cãi nhau</b>: đa số ghi 4nm, một bảng ghi 5nm.</td><td>4×A78 (tới 2,6 GHz) + 4×A55</td><td>Mali-G615 MC2</td><td>AnTuTu 10 khoảng 640–710K tuỳ nguồn; Geekbench 6 khoảng 1.020 đơn nhân / 2.920 đa nhân. Có APU AI 655. Modem 5G: chưa tra.</td></tr>
+<tr><td><b>Exynos 1330</b><br><span class="note">Galaxy A17 5G</span></td><td>Samsung thiết kế và sản xuất (S5E8535), 5nm</td><td><b>nguồn cãi nhau</b>: 2×A78+6×A55 (bài so của PhoneWorld, báo VN) hay 4×A78+4×A55 (SiliconCat)</td><td>Mali-G68 (chưa xác minh)</td><td>AnTuTu 10: 414K so với D7300 711K (SiliconCat). Geekbench 6: 761 / 2.384 (PhoneWorld). Yếu hơn D7300 chừng 40%, nhưng nguồn khác máy khác lần đo.</td></tr>
+<tr><td><b>Helio G100 (/Ultra)</b><br><span class="note">Note 14 Pro 4G, Note 15 4G</span></td><td>MediaTek, 6nm</td><td>2×A76 + 6×A55 (nhân đời 2019)</td><td>Mali-G57 MC2</td><td>AnTuTu 11: 575K so với D7300 879K (NanoReview). Băng thông RAM 17,1 so với 25,6 GB/s của D7300 (TopCPU). Không 5G.</td></tr>
+<tr><td><b>Snapdragon 6s 4G Gen 2</b><br><span class="note">Note 17 4G; Honor X8d ghi "6s Gen 2"</span></td><td>chưa tra</td><td>chưa tra</td><td>chưa tra</td><td>Nguồn cãi nhau với Helio G100 (xem trên). Không 5G.</td></tr>
+<tr><td><b>Snapdragon 6 Gen 3</b><br><span class="note">Note 15 5G</span></td><td>Qualcomm, 4nm; xưởng chưa rõ</td><td>4×A78 (tới 2,4 GHz) + 4×A55</td><td>Adreno 710 (một CSDL)</td><td>AnTuTu 11: 832K (Beebom), 841K (NanoReview), 868K (91mobiles) so với D7300 khoảng 877–879K, tức <b>xấp xỉ D7300</b>. Số mẫu: chưa rõ. Có 5G.</td></tr>
+<tr><td><b>Snapdragon 6s Gen 4</b><br><span class="note">Note 17 Pro 5G</span></td><td>Qualcomm, 4nm; xưởng <b>cãi nhau</b> (TSMC theo FoneArena, Samsung theo SamMobile)</td><td>4 nhân hiệu năng tới 2,4 GHz + 4 nhân tiết kiệm</td><td>GPU model cãi nhau (Adreno 710 hay 810)</td><td>Hơn 6 Gen 3 chỉ +4% (NanoReview, AnTuTu 11) hay +17% (unite4buy, bản không ghi); nguồn tự nói số mẫu không nhất quán. Có 5G.</td></tr>
+<tr><td><b>Snapdragon 4 Gen 4</b><br><span class="note">có thể là Note 17 4G</span></td><td>Qualcomm, 4nm</td><td>2×A78 (2,3 GHz) + 6×A55 (2,0 GHz)</td><td>Adreno 613</td><td>AnTuTu 594–622K tuỳ nguồn (không ghi phiên bản). Có 5G.</td></tr>
+<tr><td><b>Dimensity 7400 / 7400 Ultra</b><br><span class="note">có thể là Note 15 Pro</span></td><td>MediaTek, TSMC 4nm</td><td>4×A78 + 4×A55 (91mobiles); NanoReview ghi khác, nguồn cãi nhau</td><td>Mali-G615 MC2</td><td>Hơn D7300 khoảng 6–9% AnTuTu (Beebom 106%, NanoReview 109%). Không nguồn nào nói là hàng đổi tên.</td></tr>
+<tr><td><b>Helio G99 Ultra</b><br><span class="note">Note 14 4G</span></td><td>MediaTek, 6nm</td><td>2×A76 + 6×A55</td><td>Mali-G57 MC2</td><td>Cùng ruột Helio G100: G100 so với G99 chỉ 575K so với 554K AnTuTu 11 (NanoReview). Khác biệt chủ yếu ở bộ xử lý ảnh (G100 hỗ trợ cảm biến tới 200MP). Không 5G.</td></tr>
+</table></div>
+<p class="note">Kiểu tên: một chip "Ultra" không đảm bảo mới. Đời nhân CPU (A55 → A76 → A78 → A715) và tiến trình mới hơn thường quan trọng hơn chữ thêm vào tên. Nhưng độ chênh điểm benchmark không nói được độ mượt hằng ngày khi chỉ lướt Zalo, bản đồ. Muốn chip không còn "tuyệt đối" thì kéo trọng số chip về 0–5 ở đầu trang.</p>
+</div>
+
+<h2>Màn hình, camera, build: chi tiết bốn máy tôi tra được</h2>
+<p class="sub">Đây là phần "tinh tế" bạn hỏi. Nhiều ô là <b>chưa rõ</b>, vì loa, độ rung, loại kính hầu hết bài đánh giá không nói. Sạc nhanh không được tính điểm.</p>
+<div class="card scroll"><table>
+<tr><th></th><th>Moto G86 Power</th><th>Redmi Note 14 Pro 5G</th><th>Galaxy A17 5G</th><th>Redmi Note 14 Pro 4G</th></tr>
+<tr><td><b>Màn hình</b></td>
+ <td>pOLED FHD+ 6,67" HDR10+, 4.500 nit đỉnh (số hãng). <b>Notebookcheck đo:</b> tối đa 1.429 nit (trung bình 1.357), vùng HDR nhỏ 3.865 nit; PWM 930 Hz biên độ 8% (khuyên người nhạy cảm tự thử). Kính Gorilla Glass 7i.</td>
+ <td>AMOLED 12-bit 1.5K 120Hz, 3.000 nit đỉnh (số hãng). PWM 1.920 Hz là lời hãng; Notebookcheck đo độc lập 1.154 nit full trắng (hãng quảng cáo 1.200 nit HBM, đạt) và 2.510 nit HDR (3.000 nit chỉ là số đỉnh, không đạt), PWM đo ra 1.851 Hz kèm nhấp nháy 120Hz 15% (bài tự mâu thuẫn: văn bản nói "xác nhận 1.920 Hz"). FAQ toàn cầu của Xiaomi ghi "không hỗ trợ anti-banding". Có bài nói ngoài nắng vẫn đọc được, có bài nói khó dùng.</td>
+ <td>Super AMOLED 6,7" FHD+ 90Hz, 800 nit. Engadget khen là điểm mạnh nhất; PhoneArena nói không đủ sáng ngày nắng, nhưng một tóm tắt khác ghi đo được trên 1.000 nit (cãi nhau). Notebookcheck nêu PWM nhấp nháy là nhược điểm (không ghi tần số). Kính Gorilla Glass Victus.</td>
+ <td>6,67" 120Hz nhưng chỉ 1080p (GSMArena). Chưa tìm được đánh giá độ sáng.</td></tr>
+<tr><td><b>Camera chính</b></td>
+ <td>Sony LYTIA 600 50MP, có OIS; góc rộng 8MP; selfie 32MP. Các bài gọi chung là "tầm thường", ban ngày ổn.</td>
+ <td>200MP có OIS. Một bài nói là cảm biến HP3 cũ của Note 13 Pro 4G, nhưng các bài cãi nhau về kích thước (1/1,4" hay khác). Góc rộng "trung bình", macro ít dùng. Một bài nói yếu khi thiếu sáng.</td>
+ <td>50MP f/1,8 có OIS; góc rộng chỉ 5MP; macro 2MP. <b>Chỉ quay tới 1080p 30fps, không có 4K.</b></td>
+ <td>200MP; <b>chỉ quay 1080p, không 4K</b> (AllRoundReview). Chưa kiểm sensor cụ thể.</td></tr>
+<tr><td><b>Cảm biến chính (kích thước)</b></td>
+ <td>Sony LYT-600 50MP, <b>1/1,95"</b>, f/1,88, OIS (Beebom, Gizbot, Kimovil). Điểm ảnh 0,8 hay 1,0 µm tuỳ nguồn.</td>
+ <td>200MP; <b>nếu là Samsung HP3 thì 1/1,4"</b> (số của Samsung cho HP3, công bố 2022; xuất ảnh gộp 50MP). Chỉ <i>một</i> bài ghi Note 14 Pro 5G dùng HP3, các bài khác cãi nhau về kích thước, nên tôi coi là chưa chắc.</td>
+ <td>Samsung ISOCELL S5KJN1 (tên model chỉ Gizbot và Wikipedia ghi), 50MP, <b>1/2,76"</b>, điểm ảnh 0,64 µm (GSMArena). Nhỏ nhất trong bốn máy.</td>
+ <td>200MP, <b>1/1,4"</b>, OIS (Xiaomi global, GSMArena); chỉ quay 1080p.</td></tr>
+<tr><td><b>Build / chống nước</b></td>
+ <td>IP68/IP69 và MIL-STD-810H; khung nhựa, lưng giả da (shop VN), Gorilla Glass 7i; 198 g. Chê: nóng khi tải nặng, camera thiếu tele, ảnh thiếu sáng nhiễu (Notebookcheck, TGDĐ, FPT).</td>
+ <td>Mặt Gorilla Glass Victus 2 (theo GSMArena), lưng nhựa/giả da, IP68; hơi nặng, cụm camera làm máy bập bênh khi đặt bàn.</td>
+ <td>Nhựa; Engadget bảo nhựa làm tốt. Consumer Reports chấm độ bền thấp, nhưng từ một máy bị vỡ màn, tôi không suy rộng ra được.</td>
+ <td>IP64 (chống bụi và nước bắn, không ngâm được). Kính và khung: <b>chưa rõ</b>.</td></tr>
+<tr><td><b>Loa</b></td>
+ <td>Stereo Dolby Atmos (shop VN); Notebookcheck ghi "stereo hybrid"; FPT chê bass yếu.</td>
+ <td>Stereo, một số bài ghi Dolby Atmos.</td>
+ <td>Mono, chỉ loa dưới (GSMArena, Notebookcheck).</td>
+ <td><b>chưa rõ</b></td></tr>
+<tr><td><b>Rung (haptics)</b></td><td><b>chưa rõ</b></td><td>Mô tơ tuyến tính trục X, Notebookcheck nhận xét chủ quan là tốt (một bài, một máy)</td><td><b>chưa rõ</b></td><td><b>chưa rõ</b></td></tr>
+<tr><td><b>Cập nhật</b></td>
+ <td>Ra mắt Android 15, lên Android 16 tháng 12/2025 (tóm tắt); cam kết chính thức của Motorola VN: chưa tra được.</td>
+ <td>Chưa tìm được cam kết cho riêng Note 14 Pro.</td>
+ <td>Samsung ghi 6 năm OS và bảo mật (một bài tóm tắt trang Mỹ; trang Samsung VN chưa mở được). GSMArena: Việt Nam nhận One UI 8 đầu tiên (11/2025).</td>
+ <td>chưa rõ</td></tr>
+</table>
+<p class="note" style="margin-top:10px">Các máy còn lại (Honor X8d) tôi chưa tra phần này, nên không có số. Loa, độ rung, kính: muốn biết thì cầm tại cửa hàng, nghe một bài nhạc, gõ bàn phím, gõ vào mặt kính. Đó là kiểu thứ bài đánh giá hầu như không chấm.</p></div>
+
+<h2>Xiaomi Redmi Note 14 / 15 / 17: từng bản ruột gì</h2>
+<p class="sub">Cùng tên "Note" nhưng 4G, 5G, Pro khác chip, cảm biến và pin. Tôi chỉ ghi cái có nguồn; ô trống là chưa tra được. Kích thước cảm biến là chỗ bạn hỏi nhất, tôi đánh dấu nguồn cho từng ô.</p>
+<div class="card scroll"><table>
+<tr><th>Bản</th><th>Chip</th><th>Cảm biến chính (kích thước)</th><th>Pin / chống nước / màn</th><th>Giá thấy được</th></tr>
+<tr><td><b>Note 14 4G</b></td><td>Helio G99 Ultra (theo một bài liệt kê shop, chưa đối chiếu)</td><td>108MP Samsung S5KHM6, <b>1/1,67"</b>, 0,64µm, f/1,7, không OIS (NanoReview)</td><td>5.500 mAh (33W) · IP54 · AMOLED 6,67" 120Hz 1080p (một review)</td><td>Thế Giới Di Động 4.990.000₫ lúc ra mắt (ghi ngừng kinh doanh)</td></tr>
+<tr><td><b>Note 14 5G</b></td><td>Dimensity 7025 Ultra (GSMArena qua tìm kiếm, chưa mở trang)</td><td>cùng 108MP HM6 <b>1/1,67"</b>; có thêm OIS và góc rộng 8MP (NanoReview, Mi)</td><td>chưa tra</td><td>Viettel Store 6.490.000₫ (8/256, đoạn bạn dán)</td></tr>
+<tr><td><b>Note 14 Pro 4G</b></td><td>Helio G100 Ultra, 6nm</td><td>200MP, <b>1/1,4"</b>, OIS, f/1,65–1,7 (Xiaomi global và GSMArena; tên model HP3 chỉ một trang tổng hợp ghi). <b>Cùng cỡ cảm biến với bản 5G.</b></td><td>5.500 mAh · IP64 · <b>AMOLED</b> 6,67" 1080p 120Hz (Mi FAQ, Nanoreview; không phải LCD). GSMArena nói chip gần như là G99 Ultra đổi tên</td><td>Viettablet 4.499.000₫</td></tr>
+<tr><td><b>Note 14 Pro 5G</b></td><td>Dimensity 7300 Ultra, 4nm</td><td>200MP Samsung HP3, <b>1/1,4"</b> (GSMArena, bản châu Âu; bản Trung Quốc/Ấn Độ lại là 50MP, chưa biết bản VN theo bản nào ngoài việc VnReview ghi 200MP)</td><td>5.110 mAh · IP68 · AMOLED 1.5K. Notebookcheck đo 1.154 nit full trắng, 2.510 nit HDR (không tới 3.000 nit hãng quảng cáo); PWM đo 1.851 Hz + nhấp nháy 120Hz 15%. Quay 4K 30fps. Nhận xét: SoC yếu so với giá</td><td>6,5 đến 7,3 triệu (xem bảng giá; giá 5,2 triệu của Đức Huy đã loại)</td></tr>
+<tr><td><b>Note 14 Pro+ 5G</b></td><td>Snapdragon 7s Gen 3, 4nm (Notebookcheck, CellphoneS, Di Động Việt; riêng Hoàng Hà, một shop, ghi Dimensity 7300 Ultra)</td><td>200MP HP3 <b>1/1,4"</b> (GSMArena, các shop VN); riêng bảng thông số Notebookcheck lại ghi 50MP, nguồn cãi nhau</td><td>5.110 mAh · IP68 · đo độc lập: 1.210 nit full trắng, nhấp nháy PWM 120Hz + 1.923 Hz (Notebookcheck)</td><td>Viettel Store 7.890.000₫ (8/256, ảnh bạn chụp)</td></tr>
+<tr><td><b>Note 15 4G</b></td><td>Helio G100 Ultra, 6nm (FPT, lời shop)</td><td>108MP f/1,7, <b>1/1,67"</b>; OIS chưa rõ (FPT, lời shop)</td><td>6.000 mAh, 33W · IP64 · AMOLED 6,77" FHD+ 120Hz, 3.200 nit (số hãng) · loa đôi Dolby Atmos</td><td>FPT 5.190.000₫ (khuyến mãi "đến 19/11", không ghi năm); Thế Giới Di Động ghi "ngừng kinh doanh"</td></tr>
+<tr><td><b>Note 15 5G</b></td><td>Snapdragon 6 Gen 3, 4nm (FPT)</td><td>108MP f/1,7, <b>1/1,67"</b>, OIS, góc rộng 8MP (FPT, lời shop); chỉ quay 30fps (PhoneArena, tóm tắt)</td><td>5.520 mAh, 45W · IP66 · AMOLED 6,77" 120Hz, 3.200 nit. Chê lặp lại: quảng cáo/bloatware, ảnh làm sắc quá, vỏ nhựa (tóm tắt nhiều nguồn, chưa kiểm từng bài)</td><td>FPT 6.190.000₫ (niêm yết 7.490.000₫); Viettel Store 6.290.000₫</td></tr>
+<tr><td><b>Note 15 Pro 5G</b></td><td>Dimensity 7400 Ultra, 4nm (FPT)</td><td>200MP, <b>1/1,4"</b>, OIS; tên model chưa chắc (GSMArena chỉ đoán S5KHPE); góc rộng 8MP "không dùng được nếu thiếu OIS" (Notebookcheck)</td><td>6.500–6.580 mAh (nguồn cãi nhau) · IP68 · AMOLED 6,83" 1.5K, Gorilla Glass Victus 2 (shop). Notebookcheck đo: đỉnh HDR 2.965 nit nhưng <b>tụt dưới 990 nit sau một lúc ngắn</b>, PWM 120Hz biên độ 16,9% + 3.846 Hz; chê "giật trong dùng hằng ngày", UFS 2.2, USB 2.0</td><td>FPT 9.390.000₫ (niêm yết 11.490.000₫, 12/256); Viettel Store 8.490.000₫</td></tr>
+<tr><td><b>Note 17 4G</b></td><td>chưa rõ: Snapdragon 6s 4G Gen 2 6nm (trang sản phẩm FPT) hay Snapdragon 4 Gen 4 4nm (bài ra mắt FPT)</td><td>50MP f/1,8; model, kích thước, OIS: <b>chưa rõ</b></td><td>7.700 mAh (trang) hay 8.000 mAh (bài) · IP65 · AMOLED 6,99" 1.080p, 1.800 nit (số hãng)</td><td>FPT 6.390.000₫ (niêm yết 6.990.000₫); Hoàng Hà 5.890–5.990.000₫ (29/8/2026)</td></tr>
+<tr><td><b>Note 17 5G</b></td><td>Snapdragon 4 Gen 4, 4nm (Notebookcheck đo: 2×A78 + 6×A55, Adreno 613, 6GB LPDDR4X)</td><td>50MP f/1,8 Samsung JN1, <b>1/2,76"</b>; <b>không có góc rộng</b>; quay tối đa 1080p 30fps (Notebookcheck)</td><td>7.700 mAh, 45W · IP65 · Gorilla Glass 7i (shop). Notebookcheck đo: 1.160 nit APL18, HDR 1.959 nit, PWM 480Hz (hãng nói 960Hz), loa mono. Chê: hệ thống chậm, RAM ít, hao pin, quảng cáo, bảo hành chỉ 12 tháng</td><td>FPT 8.690.000₫ (niêm yết 8.990.000₫); Hoàng Hà 7.490.000₫ flash sale (có nơi tạm hết hàng); Viettel Store 7.990.000₫</td></tr>
+<tr><td><b>Note 17 Pro 5G</b></td><td>Snapdragon 6s Gen 4, 4nm (Xiaomi Singapore, FPT; một nguồn ghi 6 Gen 5, cãi nhau)</td><td>50MP f/1,8 OIS, <b>1/2,76"</b>, 0,64µm (PhoneArena, Xiaomi Ả Rập Xê Út; model "OV51A" của FPT chưa xác minh)</td><td>8.340 mAh (nguồn khác 9.000), 67W · IP68/69 · AMOLED 6,83" 1.5K, 3.500 nit (số hãng; Notebookcheck bản Đức đo trên 4.000 nit, chưa đọc toàn văn). Nặng 226–228 g. Chê: "SoC yếu", "camera bị hạ cấp" (Notebookcheck, chỉ thấy tóm tắt)</td><td>FPT 10.290.000₫ (niêm yết 11.490.000₫); Hoàng Hà 9.490.000₫ flash sale. <b>Lệch hẳn với "từ 6,2 triệu" tôi ghi trước</b>: đó có thể là giá bản Trung Quốc hoặc cấu hình khác (CellphoneS nói thế)</td></tr>
+</table>
+<p class="note" style="margin-top:10px"><b>Điều đáng để ý:</b> nếu 1/2,76" của Note 17 Pro đúng thì máy đời mới, tên "Pro", lại có cảm biến chính <i>nhỏ hơn nhiều</i> so với Note 14 Pro 5G (1/1,4") và còn nhỏ hơn Note 14/15 thường (108MP 1/1,67"). Đó là kiểu "đầu dê" mà bạn nghi, nhưng cảm biến nhỏ không nói hết chất lượng ảnh (xử lý ảnh, OIS cũng quan trọng) và tôi chưa thấy bài so ảnh thật giữa chúng. Note 15 Pro và Note 17 Pro Max tôi chưa đọc đủ nên bảng không có thông số chi tiết.</p>
+</div>
+
+<h2>Giá từng web (tra được)</h2>
+<p class="sub">Giá niêm yết đổi liên tục và các trang tôi đọc không luôn ghi ngày. Cột cuối cho biết cái nào đáng ngờ. Trước khi mua, mở link và đối chiếu lại. FPT Shop và CellphoneS nhiều máy tôi không đọc được giá trong kết quả.</p>
+<div class="card scroll"><table>
+<tr><th>Máy</th><th>Cửa hàng</th><th>Giá</th><th>Ghi chú</th></tr>
+<tr><td rowspan="2"><b>Moto G86 Power 5G 8/128</b></td><td><a href="https://www.thegioididong.com/dtdd/motorola-moto-g86-5g-8gb-128gb?rg=1">Thế Giới Di Động</a></td><td>6.590.000₫</td><td>gạch từ 7.090.000₫; có nhãn "đã cháy suất", khuyến mãi đến 30/11 (lần trước tôi thấy 6.440.000₫)</td></tr>
+<tr><td><a href="https://www.dienmayxanh.com/dien-thoai/motorola-moto-g86-5g-8gb-128gb">Điện Máy Xanh</a></td><td>4.850.000₫</td><td>-31%; trang có mục máy cũ, tôi không chắc đây là máy mới. Hỏi rõ trước khi mua.</td></tr>
+<tr><td rowspan="4"><b>Redmi Note 14 Pro 5G 8/256</b></td><td>Đức Huy Mobile</td><td><s>5.199.000₫</s></td><td>bạn kiểm tra: <b>không có thật</b>, đã loại khỏi so sánh</td></tr>
+<tr><td><a href="https://www.viettablet.com/xiaomi-redmi-note-14-pro-5g-8gb-256gb-chinh-hang">Viettablet</a></td><td>6.499.000₫</td><td>không ghi ngày</td></tr>
+<tr><td><a href="https://didongviet.vn/dien-thoai/xiaomi-redmi-note-14-pro-5g-256gb.html">Di Động Việt</a></td><td>7.290.000₫</td><td>giá "khởi điểm"</td></tr>
+<tr><td><a href="https://www.thegioididong.com/tin-tuc/tren-tay-redmi-note-14-pro-5g-1574470">Thế Giới Di Động</a></td><td>7.320.000₫</td><td>gạch từ 9.320.000₫; một bài viết cũ ghi 9.490.000₫</td></tr>
+<tr><td rowspan="2"><b>Redmi Note 14 Pro 4G 8/256</b></td><td><a href="https://www.viettablet.com/xiaomi-redmi-note-14-pro-4g">Viettablet</a></td><td>4.499.000₫</td><td>không ghi ngày</td></tr>
+<tr><td><a href="https://vnreview.vn/threads/xiaomi-rai-tham-thi-truong-viet-nam-voi-4-phien-ban-redmi-note-14-series-dau-tu-lon-ve-camera-do-ben-bi-chong-roi-vo-hang-loat-tinh-nang-ai.52709/latest">Thế Giới Di Động (qua VnReview)</a></td><td>7.990.000₫</td><td>giá lúc ra mắt, đã cũ</td></tr>
+<tr><td rowspan="5"><b>Galaxy A17 5G</b></td><td><a href="https://www.thegioididong.com/dtdd/samsung-galaxy-a17-5g-8gb-128gb">Thế Giới Di Động</a></td><td>4.980.000₫</td><td>-29%; trang sản phẩm, không ghi ngày (lúc mở bán 5.890.000₫)</td></tr>
+<tr><td><a href="https://cellphones.com.vn/dien-thoai-samsung-galaxy-a17-5g.html">CellphoneS</a></td><td>5.890.000₫</td><td>niêm yết 6.090.000₫</td></tr>
+<tr><td><a href="https://viettelstore.vn/tin-tuc/samsung-galaxy-a17-5g-gia-bao-nhieu">Viettel Store</a></td><td>5.990.000₫</td><td>bài tháng 10/2025</td></tr>
+<tr><td><a href="https://www.dienmayxanh.com/dien-thoai/samsung-galaxy-a17-5g-8gb-256gb">Điện Máy Xanh</a></td><td>7.690.000₫ (8/256)</td><td>niêm yết 7.990.000₫; khuyến mãi đến 30/11. <b>Cao hơn hẳn các giá 4,98–5,99 triệu ở trên</b>, hai nhóm giá cãi nhau, bạn mở link kiểm</td></tr>
+<tr><td><a href="https://fptshop.com.vn/dien-thoai/samsung-galaxy-a17-5g?sku=00920680">FPT Shop</a></td><td>7.900.000₫ (8/128)</td><td>niêm yết 8.790.000₫; khuyến mãi "đến 18/11", không ghi năm</td></tr>
+<tr><td rowspan="4"><b>Honor X8d</b></td><td><a href="https://fptshop.com.vn/dien-thoai/honor-x8d">FPT Shop</a></td><td>7.490.000₫</td><td>8/128</td></tr>
+<tr><td><a href="https://viettelstore.vn/tin-tuc/honor-x8d-gia-bao-nhieu">Viettel Store</a></td><td>8.090.000₫</td><td>giá niêm yết</td></tr>
+<tr><td>Thế Giới Di Động</td><td>8.390.000₫ (8/256)</td><td>bài hotsale, không rõ ngày; gạch từ 8.990.000₫</td></tr>
+<tr><td>Viettablet</td><td>5.399.000₫ (8/128)</td><td>ROM quốc tế có tiếng Việt; bảo hành 24 tháng (nguồn khác ghi 12 tháng, cãi nhau)</td></tr>
+<tr><td rowspan="2"><b>Redmi Note 14 (thường)</b></td><td><a href="https://www.thegioididong.com/dtdd/xiaomi-redmi-note-14-8gb-128gb">Thế Giới Di Động</a></td><td>5.490.000₫ (8/128)</td><td>không ghi ngày; bản 4G 6/128 từng 4.990.000₫, đã ghi ngừng kinh doanh</td></tr>
+<tr><td><a href="https://www.thegioididong.com/dtdd/xiaomi-redmi-note-14-8gb-256gb">Thế Giới Di Động</a></td><td>6.290.000₫ (8/256)</td><td>không ghi ngày</td></tr>
+<tr><td rowspan="3"><b>Redmi Note 14 Pro+ 5G 8/256</b></td><td><a href="https://cellphones.com.vn/dien-thoai-xiaomi-redmi-note-14-pro-plus.html">CellphoneS</a></td><td>8.490.000₫</td><td>gạch từ 10.800.000₫; không ghi ngày</td></tr>
+<tr><td>FPT Shop</td><td>8.490.000₫</td><td>có nút "để lại thông tin khi có hàng": nghi hết hàng</td></tr>
+<tr><td><a href="https://didongviet.vn/dien-thoai/xiaomi-redmi-note-14-pro-plus-5g-256gb.html">Di Động Việt</a></td><td>6.990.000₫ / 9.590.000₫</td><td>cùng một trang ghi hai giá khác nhau</td></tr>
+<tr><td rowspan="3"><b>Redmi Note 15 4G 6/128</b></td><td><a href="https://fptshop.com.vn/dien-thoai/xiaomi-redmi-note-15">FPT Shop</a></td><td>5.190.000₫</td><td>niêm yết 5.990.000₫; khuyến mãi "đến 19/11", không ghi năm</td></tr>
+<tr><td>Viettel Store (ảnh bạn chụp 17/11)</td><td>5.090.000₫</td><td>gạch từ 5.990.000₫</td></tr>
+<tr><td>Thế Giới Di Động / XTmobile</td><td>(ngừng KD) / 4.799.000₫</td><td>Viettablet 4.149.000₫, Điện Máy Xanh 4.250.000₫ từ đoạn bạn dán, chưa kiểm</td></tr>
+<tr><td rowspan="2"><b>Redmi Note 15 5G 6/128</b></td><td><a href="https://fptshop.com.vn/dien-thoai/xiaomi-redmi-note-15-5g">FPT Shop</a></td><td>6.190.000₫</td><td>niêm yết 7.490.000₫; bài FPT cùng cấu hình ghi "khoảng 5,69 triệu" (cãi nhau)</td></tr>
+<tr><td>Viettel Store (ảnh)</td><td>6.290.000₫</td><td>gạch từ 7.490.000₫</td></tr>
+<tr><td rowspan="2"><b>Redmi Note 15 Pro 5G 12/256</b></td><td><a href="https://fptshop.com.vn/dien-thoai/xiaomi-redmi-note-15-pro-5g">FPT Shop</a></td><td>9.390.000₫</td><td>niêm yết 11.490.000₫</td></tr>
+<tr><td>Viettel Store (ảnh)</td><td>8.490.000₫</td><td>gạch từ 10.090.000₫</td></tr>
+<tr><td rowspan="3"><b>Redmi Note 17 4G 4/128</b></td><td><a href="https://fptshop.com.vn/dien-thoai/xiaomi-redmi-note-17">FPT Shop</a></td><td>6.390.000₫</td><td>niêm yết 6.990.000₫; khuyến mãi "đến 19/11"</td></tr>
+<tr><td><a href="https://hoanghamobile.com/tin-tuc/danh-gia-redmi-note-17/">Hoàng Hà Mobile</a></td><td>5.890.000–5.990.000₫</td><td>bài ngày 29/8/2026; chỉ thấy đoạn tóm tắt</td></tr>
+<tr><td>Viettel Store (ảnh)</td><td>6.190.000₫</td><td>gạch từ 6.990.000₫</td></tr>
+<tr><td rowspan="3"><b>Redmi Note 17 5G 6/128</b></td><td><a href="https://fptshop.com.vn/dien-thoai/xiaomi-redmi-note-17-5g">FPT Shop</a></td><td>8.690.000₫</td><td>niêm yết 8.990.000₫</td></tr>
+<tr><td><a href="https://hoanghamobile.com/dien-thoai/xiaomi-redmi-note-17-5g">Hoàng Hà</a></td><td>7.490.000₫</td><td>flash sale, có cửa hàng "tạm hết hàng"</td></tr>
+<tr><td>Viettel Store (ảnh)</td><td>7.990.000₫</td><td>gạch từ 8.990.000₫</td></tr>
+<tr><td rowspan="3"><b>Redmi Note 17 Pro 5G 6/256</b></td><td><a href="https://fptshop.com.vn/dien-thoai/xiaomi-redmi-note-17-pro-5g">FPT Shop</a></td><td>10.290.000₫</td><td>niêm yết 11.490.000₫; khuyến mãi "đến 19/11"</td></tr>
+<tr><td><a href="https://hoanghamobile.com/dien-thoai/xiaomi-redmi-note-17-pro-5g">Hoàng Hà</a></td><td>9.490.000₫</td><td>flash sale, có cửa hàng "tạm hết hàng"</td></tr>
+<tr><td>CellphoneS / VnReview</td><td>"8–11 triệu" / 6.200.000₫</td><td>mức 6,2 triệu lệch hẳn; CellphoneS nói có thể là giá bản Trung Quốc</td></tr>
+<tr><td><b>Redmi Note 14 Pro+ 5G 8/256</b></td><td>Viettel Store (ảnh bạn chụp)</td><td>7.890.000₫</td><td>gạch từ 10.800.000₫</td></tr>
+<tr><td><b>Moto G86 5G (không Power)</b></td><td>(chưa tìm thấy ở VN)</td><td>chưa có</td><td>Kimovil ghi giá toàn cầu khoảng 243 USD (8/256), không dùng được cho Việt Nam</td></tr>
+</table>
+<p class="note" style="margin-top:10px">Không tìm được giá: các nơi bán ở Hoàng Hà, FPT Shop (trừ Honor X8d và Galaxy A17 không có giá), CellphoneS (ngoài Galaxy A17).</p></div>
+
+<h2>Bảng dữ liệu (sửa trực tiếp)</h2>
+<div class="card scroll">
+  <table id="tbl"></table>
+  <p style="margin-top:12px"><button id="add">+ Thêm máy</button> <button class="ghost" id="reset">Khôi phục dữ liệu gốc</button></p>
+</div>
+
+<h2>Ghi chú về nguồn và chỗ chưa chắc</h2>
+<div class="card">
+<ul class="note" style="font-size:13.5px;color:var(--ink)">
+  <li><b>Chip của Moto G86 Power:</b> bản bán ở Việt Nam được các báo và shop Việt ghi là Dimensity 7300; một số trang quốc tế (Smartprix, 91mobiles) ghi 7400. Tôi lấy 7300 cho bản Việt: FPT, Notebookcheck (đo) và Viettablet ghi 7300, riêng Thế Giới Di Động ghi 7400; Motorola VN chưa tra được, và tôi chưa tự kiểm bằng máy thật.</li>
+  <li><b>Số đo chip:</b> chỉ có số đo cho Dimensity 7300 và Snapdragon 7s Gen 2 (AnTuTu v10 ~640K và ~590K, Gizmochina / Beebom, mỗi nơi đo trên một máy, chênh nhau tuỳ nguồn). Dimensity 8300 (chip Poco X6 Pro, đã bỏ khỏi bảng) nhanh hơn Dimensity 7300 Ultra của Redmi Note 14 Pro khoảng 88% trong AnTuTu (NanoReview, không rõ phiên bản và số máy đo). Helio G100 Ultra và Snapdragon 6s 4G: <b>không tìm được số đo</b>, điểm chip của hai máy đó là đoán.</li>
+  <li><b>Tấm nền / hãng:</b> hãng gần như không công bố. Duy nhất tìm thấy: Xiaomi tự ghi Redmi Note 14 Pro+ dùng AMOLED của TCL (không phải bản Pro thường). Độ nhấp nháy PWM 1920 Hz cũng chỉ là lời hãng, FAQ toàn cầu của chính Xiaomi lại ghi bản Pro 5G "không hỗ trợ anti-banding". Chưa có teardown độc lập để chốt. Muốn biết chắc tấm nền của một máy cụ thể, phải xem teardown hoặc đo bằng máy đo, nhìn thông số không ra.</li>
+  <li><b>Điểm "trải nghiệm":</b> màn hình, phần mềm, camera, độ bền là tôi ước từ thông số hãng và vài bài đánh giá, không phải từ việc dùng thật. Chưa có bài dùng dài hạn nào nói về cả hai bên. Nên xem như điểm xuất phát, sửa theo cảm nhận của bạn khi cầm máy tại cửa hàng.</li>
+  <li><b>Giá:</b> các giá Viettel Store lấy từ ảnh bạn chụp ngày 17/11. Giá shop khác lấy từ đoạn bạn dán, tôi chưa kiểm lại.</li>
+  <li><b>"Redmi Note 14 Pro giá 5 triệu":</b> bản 5G ra mắt Việt Nam giá 5,199 triệu (bài tháng 3/2025), nhưng các shop hiện niêm yết 6,5–7,3 triệu; tôi không tìm được bằng chứng bản 5G còn bán ~5 triệu. Mức ~4,5 triệu là bản <b>4G</b> (Viettablet 4,499 triệu): chip Helio G100 Ultra, màn chỉ 1080p, IP64, không 5G, không quay 4K. Rất có thể trang bạn thấy là bản này. Kiểm tên đầy đủ có chữ "5G" không trước khi trả tiền.</li>
+  <li><b>Galaxy A17 5G:</b> giá 5,89–6,19 triệu lúc mở bán 8/2025 (TGDĐ, Sforum), giá hiện tại chưa tra. Cam kết cập nhật 6 năm chỉ thấy ở một bài báo, chưa có nguồn chính thức. Lợi thế thật là One UI sạch hơn HyperOS; chip yếu hơn Dimensity 7300 (điểm chip là ước vì chưa có số đo tôi dám dùng).</li>
+  <li><b>Honor X8d:</b> pin 7.000 mAh nhưng chỉ 4G và giá 7,49–8,09 triệu, đắt cho cấu hình; để cho đủ bộ so sánh.</li>
+  <li><b>Không thêm được:</b> Tecno Pova 7, realme C75, OPPO A3 (Dimensity 6300, ~4 triệu) vì không tra được thông số/giá Việt Nam đủ tin cậy. Dòng Poco X6/X7 Pro đã bị bỏ theo ý bạn (chỉ có giá cũ), nên trang chỉ giữ máy có giá mới.</li>
+  <li><b>Danh sách "top máy 5 triệu" của các shop</b> (Hoàng Hà, Vietnamnet…) là bài của đại lý bán máy, tôi chỉ dùng để gợi tên chứ không lấy điểm của họ.</li>
+</ul>
+<details><summary>Kiểm hàng tồn / "new unbox" trước khi mua</summary>
+<ul style="font-size:13.5px">
+  <li>Nhập IMEI trên trang kiểm bảo hành của hãng: ngày kích hoạt bảo hành đã chạy chưa? Máy tồn đã chạy bảo hành từ lúc nhập kho thì mua rẻ cũng thiệt.</li>
+  <li>Hỏi thẳng: seal nguyên hay không, bảo hành tính từ ngày mua hay từ ngày kích hoạt, ai bảo hành.</li>
+  <li>Xem chu kỳ sạc pin (Cài đặt → Giới thiệu hoặc app kiểm tra), máy "mới 100%" mà đã sạc vài chục lần là máy đã qua tay.</li>
+  <li>Tránh bản "mở hộp" của shop nhỏ không rõ nguồn nhập; mua nơi có đổi trả 30 ngày.</li>
+</ul></details>
+</div>
+</main>
+
+<script>
+const CRIT=[
+ {k:'chip',n:'Chip (hiệu năng thô)',w:10},
+ {k:'screen',n:'Màn hình thực tế',w:20},
+ {k:'soft',n:'Phần mềm / độ mượt dùng thật',w:20},
+ {k:'battery',n:'Pin dùng thật',w:20},
+ {k:'cam',n:'Camera',w:10},
+ {k:'tough',n:'Độ bền (nước, bụi, rơi)',w:20},
+];
+const COLORS=['--c0','--c1','--c2','--c3','--c4','--c5','--c6','--c7','--c8'];
+// c: v = đã tra, e = ước, u = chưa rõ
+const DEFAULT=[
+ {id:1,name:'Moto G86 Power 5G (8GB)',brand:'moto',chip:'Dimensity 7300 (bản VN)',panel:'pOLED 6,67" FHD+ 120Hz, sáng đỉnh 4.500 nit; hãng tấm nền chưa rõ',lo:4.85,hi:6.59,
+  s:{chip:6,screen:8,soft:7,battery:9,cam:6.5,tough:9},c:{chip:'v',screen:'v',soft:'e',battery:'v',cam:'e',tough:'v'}},
+ {id:2,name:'Redmi Note 14 Pro 5G',brand:'xiaomi',chip:'Dimensity 7300 Ultra',panel:'AMOLED 1.5K 120Hz, sáng đỉnh 3.000 nit, PWM 1920Hz (đều là lời hãng/báo); hãng tấm nền chưa rõ (bản Pro+ ghi TCL)',lo:6.5,hi:7.32,
+  s:{chip:6,screen:8,soft:7,battery:6.5,cam:7.5,tough:8},c:{chip:'v',screen:'e',soft:'e',battery:'v',cam:'e',tough:'e'}},
+ {id:4,name:'Redmi Note 15 4G (6GB/128GB)',brand:'xiaomi',chip:'Helio G100 Ultra',panel:'chưa rõ',lo:4.15,hi:5.09,
+  s:{chip:4,screen:6.5,soft:7,battery:8,cam:5.5,tough:5},c:{chip:'u',screen:'u',soft:'e',battery:'e',cam:'u',tough:'u'}},
+ {id:5,name:'Redmi Note 17 4G (4GB/128GB)',brand:'xiaomi',chip:'chưa rõ: Snapdragon 4 Gen 4 (tiêu đề bài Viettel Store) hay 6s 4G Gen 2 (đoạn dán), nguồn cãi nhau',panel:'AMOLED 6,99"; hãng tấm nền chưa rõ; pin 7.700 mAh (Hoàng Hà) hay 8.000 mAh (Viettel Store)',lo:5.89,hi:6.39,
+  s:{chip:3.5,screen:6.5,soft:6,battery:9.5,cam:5,tough:7},c:{chip:'u',screen:'e',soft:'e',battery:'e',cam:'u',tough:'u'}},
+ {id:6,name:'Redmi Note 14 Pro 4G (8GB/256GB) ← có thể là máy "5 triệu" bạn thấy',brand:'xiaomi',chip:'Helio G100 Ultra (6nm), KHÔNG 5G',panel:'LCD/AMOLED 6,67" 120Hz nhưng chỉ 1080p (bản 5G là 1.5K); hãng tấm nền chưa rõ',lo:4.5,hi:4.5,
+  s:{chip:4,screen:6.5,soft:7,battery:7.5,cam:7.5,tough:5.5},c:{chip:'u',screen:'e',soft:'e',battery:'v',cam:'v',tough:'v'}},
+ {id:7,name:'Samsung Galaxy A17 5G (8GB/128GB)',brand:'other',chip:'Exynos 1330 (2×A78 + 6×A55)',panel:'Super AMOLED 6,7" FHD+ 90Hz, chỉ 800 nit (nắng gắt khó nhìn); hãng tấm nền chưa rõ',lo:4.98,hi:7.9,
+  s:{chip:4.5,screen:6.5,soft:8,battery:6.5,cam:5,tough:5.5},c:{chip:'u',screen:'v',soft:'e',battery:'v',cam:'e',tough:'e'}},
+ {id:9,name:'Honor X8d (8GB/128GB), chỉ 4G',brand:'other',chip:'Snapdragon 6s Gen 2 (4G)',panel:'AMOLED 6,77"; hãng tấm nền chưa rõ',lo:5.4,hi:8.39,
+  s:{chip:4,screen:7,soft:6.5,battery:9.5,cam:5.5,tough:7.5},c:{chip:'u',screen:'e',soft:'u',battery:'v',cam:'u',tough:'u'}},
+ {id:10,name:'Redmi Note 15 5G (6GB/128GB)',brand:'xiaomi',chip:'Snapdragon 6 Gen 3 (4nm)',panel:'AMOLED, sáng đỉnh 3.200 nit (theo shop); hãng tấm nền chưa rõ',lo:6.19,hi:7.49,
+  s:{chip:6,screen:7.5,soft:7,battery:7,cam:7,tough:7},c:{chip:'e',screen:'e',soft:'e',battery:'e',cam:'e',tough:'e'}},
+ {id:11,name:'Redmi Note 17 Pro 5G',brand:'xiaomi',chip:'Snapdragon 6s Gen 4 (4nm)',panel:'AMOLED 6,83" 1.5K 120Hz, 3.500 nit đỉnh; hãng tấm nền chưa rõ',lo:9.49,hi:10.29,
+  s:{chip:6,screen:8.5,soft:7,battery:9,cam:5,tough:8.5},c:{chip:'e',screen:'e',soft:'e',battery:'e',cam:'e',tough:'e'}},
+ {id:12,name:'Moto G86 5G (không Power)',brand:'moto',chip:'Dimensity 7300 (Kimovil) hay 7400 (Asianet), nguồn cãi nhau',panel:'chưa rõ',lo:null,hi:null,
+  s:{chip:6,screen:7,soft:7,battery:7,cam:5.5,tough:7},c:{chip:'u',screen:'u',soft:'e',battery:'e',cam:'u',tough:'u'}},
+ {id:13,name:'Redmi Note 15 Pro 5G (12/256)',brand:'xiaomi',chip:'Dimensity 7400 Ultra (4nm)',panel:'AMOLED 6,83" 1.5K; đỉnh HDR đo 2.965 nit nhưng tụt dưới 990 nit sau một lúc (Notebookcheck)',lo:8.49,hi:9.39,
+  s:{chip:6.5,screen:7.5,soft:7,battery:9,cam:7.5,tough:8},c:{chip:'e',screen:'v',soft:'e',battery:'e',cam:'e',tough:'e'}},
+ {id:14,name:'Redmi Note 17 5G (6/128)',brand:'xiaomi',chip:'Snapdragon 4 Gen 4 (2×A78+6×A55, 4nm)',panel:'AMOLED 6,99" FHD+; đo 1.160 nit APL18, PWM 480Hz (Notebookcheck)',lo:7.49,hi:8.99,
+  s:{chip:4.5,screen:6.5,soft:6,battery:8.5,cam:5,tough:6.5},c:{chip:'e',screen:'v',soft:'e',battery:'e',cam:'v',tough:'e'}},
+];
+let S=load();
+let W=Object.fromEntries(CRIT.map(c=>[c.k,c.w]));
+let PEN=1, SEL=new Set([1,2,10,13]);
+function load(){try{const x=localStorage.getItem('phones-v11');if(x)return JSON.parse(x)}catch(e){}return JSON.parse(JSON.stringify(DEFAULT))}
+function save(){try{localStorage.setItem('phones-v11',JSON.stringify(S))}catch(e){}}
+const col=i=>getComputedStyle(document.documentElement).getPropertyValue(COLORS[i%COLORS.length]).trim();
+const bd=c=>`<span class="badge b-${c}">${c=='v'?'đã tra':c=='e'?'ước':'chưa rõ'}</span>`;
+
+function soft(p){return Math.max(0,p.s.soft-(p.brand==='xiaomi'?PEN:0))}
+function total(p){
+  let a=0,b=0;
+  for(const c of CRIT){const v=c.k==='soft'?soft(p):p.s[c.k];a+=W[c.k]*v;b+=W[c.k]}
+  return b?a/b:0;
+}
+function certainty(p){const m={v:1,e:.6,u:.25};let a=0,b=0;for(const c of CRIT){a+=W[c.k]*m[p.c[c.k]];b+=W[c.k]}return b?a/b:0}
+function price(p){return p.lo==null?'chưa có':(p.lo===p.hi?p.lo.toFixed(2).replace(/\.?0+$/,''):p.lo+'–'+p.hi).toString().replace(/\./g,',')+' tr'}
+
+function render(){
+  // weights
+  document.getElementById('weights').innerHTML=CRIT.map(c=>`<label class="w"><span>${c.n}<b>${W[c.k]}</b></span><input type="range" min="0" max="40" value="${W[c.k]}" data-w="${c.k}"></label>`).join('');
+  document.querySelectorAll('[data-w]').forEach(e=>e.oninput=()=>{W[e.dataset.w]=+e.value;render()});
+  document.getElementById('penv').textContent='−'+PEN;
+  // ranking
+  const R=[...S].sort((a,b)=>total(b)-total(a));
+  document.getElementById('ranking').innerHTML=R.map(p=>{
+    const t=total(p),cf=certainty(p),i=S.indexOf(p);
+    return `<div class="bar"><div class="nm">${p.name}</div><div class="tr"><div class="fl" style="width:${t*10}%;background:${col(i)};opacity:${.35+.65*cf}"></div></div><div class="v"><b>${t.toFixed(2)}</b> · ${price(p)}</div></div>`}).join('')
+   +`<p class="note">Độ đậm của thanh = độ chắc của dữ liệu (nhạt = nhiều ô chỉ là đoán).</p>`;
+  // chips
+  document.getElementById('chips').innerHTML=S.map((p,i)=>`<span class="chip" data-id="${p.id}" style="opacity:${SEL.has(p.id)?1:.4}"><i style="background:${col(i)}"></i>${p.name}</span>`).join('');
+  document.querySelectorAll('.chip').forEach(e=>e.onclick=()=>{const id=+e.dataset.id;SEL.has(id)?SEL.delete(id):SEL.add(id);render()});
+  radar(); scatter(); table();
+}
+function radar(){
+  const svg=document.getElementById('radar'),cx=260,cy=215,R=150,n=CRIT.length;
+  const pt=(i,r)=>{const a=-Math.PI/2+2*Math.PI*i/n;return [cx+r*Math.cos(a),cy+r*Math.sin(a)]};
+  let h='';
+  for(const lv of [2,4,6,8,10]){h+=`<polygon points="${CRIT.map((_,i)=>pt(i,R*lv/10).join(',')).join(' ')}" fill="none" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--line')}"/>`}
+  CRIT.forEach((c,i)=>{const [x,y]=pt(i,R),[tx,ty]=pt(i,R+22);h+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#ddd4c4"/><text x="${tx}" y="${ty}" font-size="11.5" text-anchor="middle" fill="#7a7064">${c.n.split(' (')[0].replace(' / độ mượt dùng thật','')}</text>`});
+  S.forEach((p,pi)=>{if(!SEL.has(p.id))return;
+    const pts=CRIT.map((c,i)=>pt(i,R*(c.k==='soft'?soft(p):p.s[c.k])/10).join(',')).join(' ');
+    h+=`<polygon points="${pts}" fill="${col(pi)}" fill-opacity=".12" stroke="${col(pi)}" stroke-width="2"/>`;});
+  svg.innerHTML=h;
+}
+function scatter(){
+  const svg=document.getElementById('scatter'),L=60,T=20,Wd=610,H=290;
+  const ps=S.filter(p=>p.lo!=null);
+  const xs=ps.flatMap(p=>[p.lo,p.hi]),xmin=Math.floor(Math.min(3,...xs)),xmax=Math.ceil(Math.max(9,...xs));
+  const X=v=>L+(v-xmin)/(xmax-xmin)*Wd, Y=v=>T+H-(v-3)/(8-3)*H;
+  let h='';
+  for(let v=3;v<=8;v++)h+=`<line x1="${L}" x2="${L+Wd}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ddd4c4"/><text x="${L-8}" y="${Y(v)+4}" font-size="11" text-anchor="end" fill="#7a7064">${v}</text>`;
+  for(let v=xmin;v<=xmax;v++)h+=`<text x="${X(v)}" y="${T+H+18}" font-size="11" text-anchor="middle" fill="#7a7064">${v} tr</text>`;
+  h+=`<text x="${L+Wd/2}" y="${T+H+38}" font-size="12" text-anchor="middle" fill="#7a7064">giá (triệu đồng)</text><text x="14" y="${T+H/2}" font-size="12" fill="#7a7064" transform="rotate(-90 14 ${T+H/2})" text-anchor="middle">điểm tổng</text>`;
+  ps.forEach(p=>{const i=S.indexOf(p),t=total(p),cy=Y(Math.min(8,Math.max(3,t)));
+    h+=`<line x1="${X(p.lo)}" x2="${X(p.hi)}" y1="${cy}" y2="${cy}" stroke="${col(i)}" stroke-width="3" opacity=".5"/><circle cx="${X((p.lo+p.hi)/2)}" cy="${cy}" r="6" fill="${col(i)}"/><text x="${X((p.lo+p.hi)/2)+10}" y="${cy-8}" font-size="11.5" fill="#241f19">${p.name.split(' (')[0]}</text>`});
+  const miss=S.filter(p=>p.lo==null);
+  if(miss.length)h+=`<text x="${L}" y="${T+H+56}" font-size="11.5" fill="#a24a2c">Chưa có giá, không vẽ: ${miss.map(p=>p.name.split(' (')[0]).join(', ')}</text>`;
+  svg.innerHTML=h;
+}
+function table(){
+  const head=`<tr><th>Máy</th><th>Chip</th><th>Tấm nền</th><th>Giá (tr) thấp / cao</th>${CRIT.map(c=>`<th>${c.n.split(' (')[0].split(' /')[0]}</th>`).join('')}<th></th></tr>`;
+  const rows=S.map(p=>`<tr><td><input type="text" data-f="name" data-id="${p.id}" value="${p.name}"><br><label class="note"><input type="checkbox" data-f="brand" data-id="${p.id}" ${p.brand==='xiaomi'?'checked':''}> Xiaomi/Redmi/Poco (áp điểm trừ)</label></td>
+   <td><input type="text" data-f="chip" data-id="${p.id}" value="${p.chip}"></td>
+   <td><input type="text" data-f="panel" data-id="${p.id}" value="${p.panel}"></td>
+   <td><input type="number" step="0.01" data-f="lo" data-id="${p.id}" value="${p.lo??''}"> / <input type="number" step="0.01" data-f="hi" data-id="${p.id}" value="${p.hi??''}"></td>
+   ${CRIT.map(c=>`<td><input type="number" min="0" max="10" step="0.5" data-s="${c.k}" data-id="${p.id}" value="${p.s[c.k]}"><br>
+     <select data-c="${c.k}" data-id="${p.id}"><option value="v"${p.c[c.k]=='v'?' selected':''}>đã tra</option><option value="e"${p.c[c.k]=='e'?' selected':''}>ước</option><option value="u"${p.c[c.k]=='u'?' selected':''}>chưa rõ</option></select></td>`).join('')}
+   <td><button class="ghost" data-del="${p.id}">Xoá</button></td></tr>`).join('');
+  document.getElementById('tbl').innerHTML=head+rows;
+}
+document.addEventListener('change',e=>{
+  const t=e.target,id=+t.dataset.id;const p=S.find(x=>x.id===id);
+  if(t.id==='pen'){return}
+  if(!p)return;
+  if(t.dataset.s){p.s[t.dataset.s]=Math.min(10,Math.max(0,+t.value||0))}
+  else if(t.dataset.c){p.c[t.dataset.c]=t.value}
+  else if(t.dataset.f==='brand'){p.brand=t.checked?'xiaomi':'other'}
+  else if(t.dataset.f==='lo'||t.dataset.f==='hi'){p[t.dataset.f]=t.value===''?null:+t.value; if(p.lo!=null&&p.hi==null)p.hi=p.lo; if(p.hi!=null&&p.lo==null)p.lo=p.hi}
+  else if(t.dataset.f){p[t.dataset.f]=t.value}
+  save();render();
+});
+document.addEventListener('click',e=>{
+  if(e.target.dataset.del){S=S.filter(p=>p.id!==+e.target.dataset.del);SEL.delete(+e.target.dataset.del);save();render()}
+});
+document.getElementById('pen').oninput=e=>{PEN=+e.target.value;render()};
+document.getElementById('add').onclick=()=>{const id=Date.now();S.push({id,name:'Máy mới',brand:'other',chip:'?',panel:'chưa rõ',lo:null,hi:null,s:{chip:5,screen:5,soft:5,battery:5,cam:5,tough:5},c:{chip:'u',screen:'u',soft:'u',battery:'u',cam:'u',tough:'u'}});SEL.add(id);save();render()};
+document.getElementById('reset').onclick=()=>{S=JSON.parse(JSON.stringify(DEFAULT));SEL=new Set([1,2,10,13]);save();render()};
+render();
+</script>
+</body>
+</html>
