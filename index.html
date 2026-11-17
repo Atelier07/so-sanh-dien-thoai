@@ -65,7 +65,7 @@ li{margin:3px 0}
 <tr><td>Cảm biến chính</td><td>Sony LYT-600 50MP, <b>1/1,95"</b>, f/1,88, OIS. Góc rộng 8MP, selfie 32MP, quay 4K 30fps (FPT)</td><td class="win">Samsung HM6 108MP, <b>1/1,67"</b>, f/1,7, OIS (GSMArena, NanoReview; Croma ghi 50MP, cãi nhau). Diện tích cảm biến lớn hơn Moto khoảng 1,36 lần (tính xấp xỉ từ kích thước danh nghĩa). Góc rộng 8MP, quay video chưa rõ</td></tr>
 <tr><td>Chất lượng ảnh thực tế</td><td>Notebookcheck, FPT, TGDĐ chê "tầm thường": thiếu tele, ảnh thiếu sáng nhiễu, chân dung xoá phông lẹm</td><td>Chưa tìm được bài so ảnh Note 14 5G với Moto. GSMArena nhận xét tổng thể: tiến bộ hơn đời trước nhưng thua máy cùng giá về hiệu năng</td></tr>
 <tr><td>Pin</td><td class="win">6.720 mAh, sạc 30–33W</td><td>5.110 mAh (một nguồn), sạc 45W; nguồn khác ghi khác, chưa chắc</td></tr>
-<tr><td>Độ bền</td><td class="win">IP68/IP69, MIL-STD-810H. Khung nhựa, lưng giả da, mặt kính Gorilla Glass 7i, 198 g, dày 8,65 mm</td><td>IP64 (chống bụi, nước bắn, không ngâm). <b>Khung nhựa, lưng nhựa</b>, mặt kính Gorilla Glass 5 (GSMArena), 190 g, dày 8 mm. Cả hai đều khung nhựa, nên không có bên nào là kim loại</td></tr>
+<tr><td>Độ bền</td><td class="win">IP68/IP69, MIL-STD-810H. Khung nhựa, lưng giả da, mặt kính Gorilla Glass 7i, 198 g, dày 8,65 mm. MIL-STD-810H là lời hãng tự công bố, không có cơ quan cấp chứng nhận</td><td>IP64 (chống bụi, nước bắn, không ngâm). <b>Khung nhựa, lưng nhựa</b>, mặt kính Gorilla Glass 5 (GSMArena), 190 g, dày 8 mm. Cả hai đều khung nhựa. Chưa có nguồn nói Gorilla Glass 7i bền hơn Gorilla Glass 5 nhiều; Note 14 5G không thấy ghi MIL-STD</td></tr>
 <tr><td>Loa / rung</td><td>Stereo Dolby Atmos, FPT chê bass yếu. Độ rung chưa rõ</td><td>Chưa rõ cả hai</td></tr>
 <tr><td>Phần mềm</td><td class="win">Gần Android gốc, ít app thừa; có quảng cáo nhẹ ở Moto Hub. Ra mắt Android 15, lên Android 16 tháng 12/2025. Cam kết chính thức của Motorola VN chưa tra được</td><td>HyperOS có nhiều quảng cáo và app thừa (Notebookcheck, Xataka đo trên máy khác trong dòng), có thể tắt phần lớn nhưng tốn công. Cam kết cập nhật chính thức của Xiaomi VN chưa tra được</td></tr>
 <tr><td>Điểm chê lặp lại</td><td>Nóng khi tải nặng, Wi-Fi 6 chỉ 1×1, có PWM nhấp nháy (Notebookcheck); sạc chậm; camera dở</td><td>Chip yếu so với giá; HyperOS quảng cáo; chống nước kém</td></tr>
@@ -79,7 +79,7 @@ li{margin:3px 0}
 <div class="card">
 <p><b>Chọn: Motorola Moto G86 Power 5G chính hãng (8/128), khoảng 6,59 triệu ở Thế Giới Di Động.</b></p>
 <ul style="font-size:14px">
-<li><b>Vì sao:</b> pin 6.720 mAh dùng cả ngày dư; IP68/IP69, kính Gorilla Glass 7i, đạt MIL-STD-810H (rơi, dính nước ít lo); màn pOLED đo sáng 1.429 nit, PWM 930 Hz (Notebookcheck); phần mềm gần Android gốc, ít app thừa; chip Dimensity 7300 đủ cho Zalo và bản đồ.</li>
+<li><b>Vì sao:</b> pin 6.720 mAh dùng cả ngày dư; IP68/IP69 (ngâm nước được), MIL-STD-810H (lời hãng tự công bố), kính Gorilla Glass 7i; màn pOLED đo sáng 1.429 nit, PWM 930 Hz (Notebookcheck); phần mềm gần Android gốc, ít app thừa; chip Dimensity 7300 đủ cho Zalo và bản đồ.</li>
 <li><b>Chấp nhận:</b> camera chỉ tầm thường (thiếu sáng ảnh nhiễu, thiếu tele), loa bass yếu, nặng ~198 g, nóng khi tải nặng. Có quảng cáo nhẹ ở Moto Hub. Cam kết cập nhật phần mềm của Motorola Việt Nam chưa tra được.</li>
 </ul>
 <p><b>Nếu chụp ảnh nhiều và chấp nhận Xiaomi:</b> Redmi Note 14 Pro 5G chính hãng (6,5–7,3 triệu), cảm biến 200MP 1/1,4" lớn hơn hẳn, quay 4K 30fps, IP68. Đổi lại HyperOS có quảng cáo và app thừa, nên nhờ người thân tắt giúp khi cài máy.</p>
@@ -327,8 +327,8 @@ const DEFAULT=[
 let S=load();
 let W=Object.fromEntries(CRIT.map(c=>[c.k,c.w]));
 let PEN=1, SEL=new Set([1,2,10,13]);
-function load(){try{const x=localStorage.getItem('phones-v14');if(x)return JSON.parse(x)}catch(e){}return JSON.parse(JSON.stringify(DEFAULT))}
-function save(){try{localStorage.setItem('phones-v14',JSON.stringify(S))}catch(e){}}
+function load(){try{const x=localStorage.getItem('phones-v15');if(x)return JSON.parse(x)}catch(e){}return JSON.parse(JSON.stringify(DEFAULT))}
+function save(){try{localStorage.setItem('phones-v15',JSON.stringify(S))}catch(e){}}
 const col=i=>getComputedStyle(document.documentElement).getPropertyValue(COLORS[i%COLORS.length]).trim();
 const bd=c=>`<span class="badge b-${c}">${c=='v'?'đã tra':c=='e'?'ước':'chưa rõ'}</span>`;
 
